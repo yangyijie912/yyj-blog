@@ -1,0 +1,24 @@
+# Docker Compose 配置 - 用于本地开发环境的 PostgreSQL
+# 如果已安装本地 PostgreSQL,可以不使用此文件
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: yyj-blog-postgres
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: yyj_blog
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

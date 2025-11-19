@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -12,6 +12,12 @@
     "typecheck:strict": "tsc --noEmit --extendedDiagnostics",
     "check": "node scripts/strict-typecheck.mjs",
     "check:all": "npm run typecheck && npm run lint && npm run check",
+    "postinstall": "prisma generate",
+    "db:start": "docker-compose up -d",
+    "db:stop": "docker-compose down",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
     "init:prod": "node scripts/init-production.mjs",
     "i18n:check": "node scripts/find-i18n-conflicts.mjs"
   },
