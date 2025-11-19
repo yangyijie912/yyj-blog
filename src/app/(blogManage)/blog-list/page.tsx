@@ -44,7 +44,7 @@ export default async function BlogListPage({ searchParams }: PageProps) {
   });
 
   // 转换数据格式
-  const posts = postsData.map((post) => ({
+  const posts = postsData.map((post: (typeof postsData)[0]) => ({
     id: post.id,
     title: post.title,
     intro: post.intro,
