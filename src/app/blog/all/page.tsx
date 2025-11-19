@@ -6,15 +6,15 @@ import { getTranslations } from 'next-intl/server';
 export const dynamic = 'force-dynamic';
 
 type Props = {
-  searchParams?: {
+  searchParams?: Promise<{
     page?: string;
     pageSize?: string;
-  };
+  }>;
 };
 
 export default async function BlogAll({ searchParams }: Props) {
   const t = await getTranslations();
-  const sp = searchParams ?? {};
+  const sp = (await searchParams) ?? {};
   const pageSize = Math.max(1, Math.min(50, Number(sp.pageSize ?? 10) || 10));
   const page = Math.max(1, Number(sp.page ?? 1) || 1);
 
