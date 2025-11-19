@@ -1,0 +1,65 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id           String   @id @default(cuid())
+    username     String   @unique
+    email        String?  @unique
+    passwordHash String
+    role         String   @default("user")
+    isActive     Int      @default(1)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+}
+
+model Post {
+    id        String   @id @default(cuid())
+    title     String
+    intro     String?
+    content   String
+    tags      Json
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    featured  Boolean  @default(false)
+}
+
+model Category {
+    id        String    @id @default(cuid())
+    name      String    @unique
+    icon      String?
+    order     Int       @default(0)
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+    projects  Project[]
+}
+
+model Project {
+    id          String   @id @default(cuid())
+    name        String
+    description String?
+    url         String?
+    linkName    String?
+    tags        Json
+    categoryId  String
+    category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    featured    Boolean  @default(false)
+}
+
+model AuditLog {
+    id        String   @id @default(cuid())
+    userId    String?
+    action    String
+    entity    String
+    entityId  String?
+    details   String?
+    ipAddress String?
+    createdAt DateTime @default(now())
+}

@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* 无 cookie 且选择 system 时，回退到系统偏好 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+:root{
+  --sidebar-width: 350px;
+  --sidebar-offset: 350px;
+  --bg: #fafafa;
+  --muted: #6b7280;
+  --accent: #0f172a;
+  --main-px: 1.25rem;
+  --main-py: 2.25rem;
+}
+
+/* 字体栈：混合 Latin 与 CJK，优先使用系统与常见 web 字体，保证中英文都有良好显示 */
+:root{
+  --font-mix: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Noto Sans CJK SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+  --cjk-stack: 'Noto Sans CJK SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+}
+
+*{box-sizing: border-box}
+
+html,body,#root{
+  height:100%;
+}
+
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background:var(--bg);
+  color:var(--foreground);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* 全局按钮样式 */
+button {
+  cursor: pointer;
+}
+
+/* 专门用于侧边栏顶部的介绍栏，混合中英文字体栈 */
+.intro {
+  font-family: var(--font-mix);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* 标题优先使用 Inter（或其它西文字体），但在展示中文时会回退到 CJK 字体栈，避免中英文大小写与字重不协调 */
+.intro h1 {
+  font-family: Inter, var(--cjk-stack);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* 说明文字：稍微优化行高与中英混排时的视觉一致性 */
+.intro .intro-desc {
+  font-family: var(--font-mix);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+/* 布局根元素 */
+.app-root{
+  display:flex;
+  min-height:100vh;
+}
+
+/* 内容区位于固定边栏的右侧 */
+.content{
+  /* 默认不推开内容，移动端不应被侧边栏占位 */
+  margin-left: 0;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+/* 在较大屏幕上为内容留出侧边栏宽度（使用 offset 变量，可在小屏为0） */
+@media (min-width:640px) {
+  .content{
+    margin-left:var(--sidebar-offset);
+  }
+}
+
+.main{
+  flex:1;
+  margin:0;
+  width:100%;
+}
+
+/* 在侧边栏和内容之间添加分割线 */
+.sidebar{ border-right:1px solid rgba(255,255,255,0.85) }
+/* 侧边栏默认宽度由变量控制（在小屏不影响内容偏移，由 --sidebar-offset 控制） */
+.sidebar{ width: var(--sidebar-width); }
+.content{ border-left:none }
+
+.footer{
+  height:56px;
+  border-top:1px solid #e6e9ef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.9);
+  color:var(--muted);
+}
+
+/* 标签美化 */
+.tag{
+  display:inline-block;
+  padding: 2px 8px;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  color: #0f172a; /* 与 --accent 对齐 */
+  background: #eef2f7;
+  border: 1px solid #e3e8f0;
+  line-height: 1.6;
+}
+.tag:hover{ filter: brightness(0.98); }
+
+/* GitHub 风格 Markdown 样式 (精简版) */
+.markdown-body {
+  font-family: var(--font-mix);
+  line-height: 1.8;
+  word-wrap: break-word;
+  font-size: 1.2rem;
+}
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 1.4em 0 0.8em;
+}
+.markdown-body h1 { font-size: 2.1em; border-bottom:1px solid #e2e5e9; padding-bottom:0.3em; }
+.markdown-body h2 { font-size: 1.7em; border-bottom:1px solid #e2e5e9; padding-bottom:0.3em; }
+.markdown-body h3 { font-size: 1.3em; }
+.markdown-body h4 { font-size: 1.15em; }
+.markdown-body h5 { font-size: 1em; }
+.markdown-body h6 { font-size: .9em;  }
+
+.markdown-body p { margin: 0.9em 0; }
+.markdown-body blockquote { margin: .9em 0; padding: 0 1em;  border-left:0.25em solid #d0d7de; }
+.markdown-body blockquote > :first-child { margin-top:0; }
+.markdown-body blockquote > :last-child { margin-bottom:0; }
+
+.markdown-body code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; font-size: .95em; background:#eee; padding:0.2em 0.4em; border-radius:4px; }
+.markdown-body pre { background:#eee; padding:1em; overflow:auto; border-radius:6px; font-size:.95em; }
+.markdown-body pre code { background:transparent; padding:0; }
+
+.markdown-body ul,
+.markdown-body ol { margin: .9em 0 .9em 1.4em; }
+.markdown-body li { margin:0.3em 0; }
+.markdown-body li > p { margin-top:0.4em; }
+
+.markdown-body table { border-collapse: collapse; margin:1.4em 0; width:100%; overflow:auto; }
+.markdown-body table th,
+.markdown-body table td { border:1px solid #d0d7de; padding:6px 12px; }
+.markdown-body table th { background:#f6f8fa; }
+
+.markdown-body hr { height:0.25em; padding:0; margin:2em 0; background:#e2e5e9; border:0; }
+
+.markdown-body a { color:#0969da; text-decoration:none; }
+.markdown-body a:hover { text-decoration:underline; }
+
+.markdown-body img { max-width:100%; box-sizing:border-box; }
+
+.markdown-body input[type='checkbox'] { margin-right:0.4em; }
+
+/* 修复 Tailwind 预处理移除列表样式导致的无序/有序列表标记丢失 */
+.markdown-body ul { list-style: disc; padding-left:1.2em; }
+.markdown-body ol { list-style: decimal; padding-left:1.2em; }
+/* 嵌套列表的不同层级样式区分 */
+.markdown-body ul ul { list-style: circle; }
+.markdown-body ol ol { list-style: lower-alpha; }
+.markdown-body ul ol { list-style: lower-alpha; }
+.markdown-body ol ul { list-style: circle; }
+.markdown-body li { list-style-position: outside; }
+
+/* 删除对 @uiw/react-md-editor 的覆盖样式（已迁移至 Bytemd） */
+
+
+/* 右侧内容区暗色主题（仅在详情页切换时附加到 .content） */
+.dark-content{ background:#363b40; color:#fff }
+.dark-content .footer{ background: #363b40; border-top-color:#1f2a44; color:#94a3b8 }
+.dark-content .tag{ color:#e2e8f0; background:#1f2937; border-color:#334155 }
+
+/* 暗色主题下markdown内容区颜色调整 */
+.dark-article .markdown-body code{ background:#333; color:#f8f8f2 }
+.dark-article .markdown-body pre{ background:#333; }
+.dark-article .markdown-body table th{ background:#333; }
+
+/* 动画：侧边栏导航出现的文字 */
+@keyframes navExtraIn{
+  from{ opacity:0; transform:translateX(-6px) }
+  to{ opacity:1; transform:none }
+}
+
+/* Toast 滑入动画 */
+@keyframes slide-in{
+  from{ opacity:0; transform:translateX(100%) }
+  to{ opacity:1; transform:translateX(0) }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+/* blogManage下面页面专用全屏布局样式 */
+.writing-page,.projects-manage-page,.dashboard-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 2rem 3rem;
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+.editor-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 1.25rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.editor-form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.editor-form::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.editor-form::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.editor-form::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* 响应式 */
+@media (max-width:640px){
+  /* 小屏时取消内容偏移，但保留侧边栏宽度用于抽屉（offset 用于内容 margin） */
+  :root{ --sidebar-offset:0 ;--main-px: 1rem; --main-py: 1rem}
+  .content{ margin-left:0 }
+
+  /* 编辑器容器在小屏使用更小的内边距并避免 100vh 问题 */
+  .editor-container {
+    padding: 1rem;
+    gap: 1rem;
+    height: auto;
+    min-height: 0;
+  }
+
+  /* 强制隐藏被平移出的侧边栏，避免占用交互或视觉空间 */
+  .sidebar.-translate-x-full {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  .sidebar.translate-x-0 {
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  /* 防止横向滚动 */
+  .app-root, .content, .main {
+    overflow-x: hidden;
+  }
+
+  /* 移动端：取消写作/管理页面的全屏 fixed 行为，允许页面整体滚动 */
+  .writing-page, .projects-manage-page, .dashboard-page {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    z-index: auto;
+    overflow: visible;
+  }
+}
