@@ -48,7 +48,7 @@ export default async function BlogListPage({ searchParams }: PageProps) {
     id: post.id,
     title: post.title,
     intro: post.intro,
-    tags: Array.isArray(post.tags) ? post.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+    tags: Array.isArray(post.tags) ? post.tags.filter((tag: unknown): tag is string => typeof tag === 'string') : [],
     featured: post.featured,
     createdAt: post.createdAt,
     updatedAt: post.updatedAt,

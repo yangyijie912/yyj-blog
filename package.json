@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "typecheck:s": "node scripts/strict-typecheck.mjs",
     "init:prod": "node scripts/init-production.mjs",
     "i18n:check": "node scripts/find-i18n-conflicts.mjs"
   },
