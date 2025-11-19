@@ -1,0 +1,34 @@
+{
+  // TypeScript 配置
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // 实时显示 TypeScript 错误
+  "typescript.validate.enable": true,
+  "typescript.suggestionActions.enabled": true,
+
+  // ESLint 配置 - 实时检查
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.run": "onType",
+
+  // 保存时自动修复（可选）
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // 显示所有问题
+  "problems.showCurrentInStatus": true,
+
+  // TypeScript 严格模式
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+
+  // 编辑器配置
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // 文件关联
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

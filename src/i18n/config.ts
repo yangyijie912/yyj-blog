@@ -12,7 +12,7 @@ export async function loadMessages(locale: Locale) {
 
 // next-intl middleware 配置
 export default getRequestConfig(async ({ requestLocale }) => {
-  const localeValue = (await requestLocale) as string | undefined;
+  const localeValue = await requestLocale;
   const resolved = locales.includes(localeValue as Locale) ? (localeValue as Locale) : defaultLocale;
 
   return {

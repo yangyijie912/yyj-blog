@@ -43,7 +43,7 @@ export default function BlogList({ posts, total, page, pageSize, q = '', sortBy 
     if (keyword) sp.set('q', keyword);
     if (sortBy) sp.set('sortBy', sortBy);
 
-    Object.entries(params).forEach(([k, v]) => {
+    Object.entries(params).forEach(([k, v]: [string, string | number | undefined]) => {
       if (v === undefined || v === '') sp.delete(k);
       else sp.set(k, String(v));
     });

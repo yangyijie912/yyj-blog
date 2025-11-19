@@ -48,8 +48,8 @@ const Editor: React.FC<EditorProps> = ({ createAction, updateAction, existingPos
     if (Array.isArray(existingPost.tags)) preset = existingPost.tags as string[];
     else if (typeof existingPost.tags === 'string') {
       try {
-        const arr = JSON.parse(existingPost.tags);
-        if (Array.isArray(arr)) preset = arr;
+        const arr = JSON.parse(existingPost.tags) as unknown;
+        if (Array.isArray(arr)) preset = arr as string[];
       } catch {}
     }
     setTags(preset);

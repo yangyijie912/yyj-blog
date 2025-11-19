@@ -68,7 +68,7 @@ const SimpleMarkdownEditor: React.FC<SimpleMarkdownEditorProps> = ({ value, onCh
       if (!files || files.length === 0) return;
 
       const formData = new FormData();
-      Array.from(files).forEach((file) => {
+      Array.from(files).forEach((file: File) => {
         formData.append('file', file);
       });
       // 添加 CSRF token
@@ -84,11 +84,11 @@ const SimpleMarkdownEditor: React.FC<SimpleMarkdownEditorProps> = ({ value, onCh
           throw new Error(t('writing.uploadFailed'));
         }
 
-        const data = await response.json();
-        const urls = data.urls as string[];
+        const data = (await response.json()) as { urls: string[] };
+        const urls = data.urls;
 
         // 插入所有图片的 markdown 语法
-        const imageMarkdown = urls.map((url) => `![image](${url})`).join('\n');
+        const imageMarkdown = urls.map((url: string) => `![image](${url})`).join('\n');
         insert(`\n${imageMarkdown}\n`, 0);
       } catch (error) {
         console.error(t('writing.uploadImageFailed'), error);
@@ -148,7 +148,7 @@ const SimpleMarkdownEditor: React.FC<SimpleMarkdownEditorProps> = ({ value, onCh
   return (
     <div ref={containerRef} className="simple-md-editor flex flex-col min-h-0">
       <div className="toolbar flex flex-wrap gap-2 px-3 py-2 border-b bg-gray-50 sticky top-0 z-5">
-        {actions.map((a) => (
+        {actions.map((a: { label: string; title: string; onClick: () => void }) => (
           <button
             key={a.label}
             type="button"

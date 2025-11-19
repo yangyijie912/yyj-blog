@@ -16,7 +16,7 @@ const attempts: Map<string, number[]> = new Map();
 function recordAttempt(key: string) {
   const now = Date.now();
   const list = attempts.get(key) || [];
-  const fresh = list.filter((t) => now - t < WINDOW_MS);
+  const fresh = list.filter((t: number) => now - t < WINDOW_MS);
   fresh.push(now);
   attempts.set(key, fresh);
   return fresh.length;

@@ -14,18 +14,18 @@ export default async function ProjectPage() {
   });
 
   // 转换数据格式
-  const categories = categoriesData.map((cat) => ({
+  const categories = categoriesData.map((cat: (typeof categoriesData)[0]) => ({
     id: cat.id,
     name: cat.name,
     icon: cat.icon,
     order: cat.order,
-    projects: cat.projects.map((proj) => ({
+    projects: cat.projects.map((proj: (typeof cat.projects)[0]) => ({
       id: proj.id,
       name: proj.name,
       description: proj.description,
       url: proj.url,
       linkName: proj.linkName,
-      tags: Array.isArray(proj.tags) ? proj.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+      tags: Array.isArray(proj.tags) ? proj.tags.filter((tag: unknown): tag is string => typeof tag === 'string') : [],
       featured: proj.featured,
     })),
   }));

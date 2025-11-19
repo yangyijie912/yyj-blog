@@ -1,0 +1,75 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TypeScript: 完整类型检查",
+      "type": "shell",
+      "command": "npx",
+      "args": ["tsc", "--noEmit", "--pretty"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "TypeScript: 严格检查 (包含项目诊断)",
+      "type": "shell",
+      "command": "npx",
+      "args": ["tsc", "--noEmit", "--extendedDiagnostics", "--listFiles"],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "检查隐式 any",
+      "type": "shell",
+      "command": "node",
+      "args": ["scripts/strict-typecheck.mjs"],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "ESLint: 完整检查",
+      "type": "shell",
+      "command": "npx",
+      "args": ["eslint", ".", "--ext", ".ts,.tsx"],
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": "$eslint-stylish"
+    },
+    {
+      "label": "完整构建检查 (模拟 Vercel)",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

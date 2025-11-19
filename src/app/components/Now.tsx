@@ -16,7 +16,7 @@ export default async function Now() {
           {t('now.title.whatIAmDoing')}
         </h2>
         <ul className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {items.map((it) => (
+          {items.map((it: { title: string; details: string }) => (
             <li
               key={it.title}
               className="group relative rounded-xl border border-slate-800/80 bg-slate-900/60 hover:border-emerald-500/50 transition overflow-hidden p-5"

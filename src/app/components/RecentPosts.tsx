@@ -25,7 +25,7 @@ export default async function RecentPostsDB({
         </h2>
 
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {posts.map((p) => (
+          {posts.map((p: { id: string; title: string; intro: string | null; createdAt: Date; tags: unknown }) => (
             <Link
               key={p.id}
               href={`/blog/${p.id}`}
@@ -46,7 +46,7 @@ export default async function RecentPostsDB({
                 {p.intro && <p className="mt-2 text-sm text-slate-300/90 line-clamp-2">{p.intro}</p>}
                 <div className="mt-4 flex flex-wrap gap-2">
                   {Array.isArray(p.tags) &&
-                    (p.tags as string[]).map((t) => (
+                    (p.tags as string[]).map((t: string) => (
                       <span
                         key={t}
                         className="px-2 py-0.5 text-xs rounded-full bg-slate-800/80 border border-slate-700/60"

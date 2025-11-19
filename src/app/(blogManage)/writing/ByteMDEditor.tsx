@@ -35,7 +35,7 @@ const ByteMDEditor: React.FC<ByteMDEditorProps> = ({ value, onChange, height }) 
   // 上传图片到服务器
   const handleUploadImages = async (files: File[]): Promise<{ url: string }[]> => {
     const formData = new FormData();
-    files.forEach((file) => {
+    files.forEach((file: File) => {
       formData.append('file', file);
     });
     // 添加 CSRF token
@@ -51,12 +51,12 @@ const ByteMDEditor: React.FC<ByteMDEditorProps> = ({ value, onChange, height }) 
         throw new Error('上传失败');
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as { urls: string[] };
       return data.urls.map((url: string) => ({ url }));
     } catch (error) {
       console.error('上传图片失败:', error);
       // 如果上传失败，降级使用本地预览
-      return files.map((f) => ({ url: URL.createObjectURL(f) }));
+      return files.map((f: File) => ({ url: URL.createObjectURL(f) }));
     }
   };
 

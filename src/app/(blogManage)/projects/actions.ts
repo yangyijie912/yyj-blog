@@ -26,7 +26,7 @@ export async function createProject(formData: FormData): Promise<ActionResultWit
   const tags = tagsStr
     ? tagsStr
         .split(',')
-        .map((t) => t.trim())
+        .map((t: string) => t.trim())
         .filter(Boolean)
     : [];
 
@@ -77,7 +77,7 @@ export async function updateProject(formData: FormData): Promise<ActionResultWit
   const tags = tagsStr
     ? tagsStr
         .split(',')
-        .map((t) => t.trim())
+        .map((t: string) => t.trim())
         .filter(Boolean)
     : [];
 

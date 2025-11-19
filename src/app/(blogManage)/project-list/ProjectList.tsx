@@ -58,7 +58,7 @@ export default function ProjectList({
     if (sortBy) sp.set('sortBy', sortBy);
     if (categoryId) sp.set('categoryId', categoryId);
 
-    Object.entries(params).forEach(([k, v]) => {
+    Object.entries(params).forEach(([k, v]: [string, string | number | undefined]) => {
       if (v === undefined || v === '') sp.delete(k);
       else sp.set(k, String(v));
     });
@@ -250,7 +250,7 @@ export default function ProjectList({
                 className="px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-slate-800 dark:border-slate-600 dark:text-white text-sm w-full sm:min-w-[140px]"
               >
                 <option value="">All</option>
-                {categories.map((cat) => (
+                {categories.map((cat: { id: string; name: string }) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
                   </option>

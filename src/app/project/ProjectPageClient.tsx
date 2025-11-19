@@ -163,7 +163,7 @@ export default function ProjectPageClient({ categories }: { categories: Category
             >
               <MdViewList className="text-base" /> {t('project.all.label')}
             </button>
-            {categories.map((cat) => {
+            {categories.map((cat: Category) => {
               const Icon = cat.icon ? iconMap[cat.icon] || DefaultIcon : DefaultIcon;
               return (
                 <button
@@ -192,7 +192,7 @@ export default function ProjectPageClient({ categories }: { categories: Category
           </div>
         ) : (
           <div className="space-y-16">
-            {categories.map((cat) => {
+            {categories.map((cat: Category) => {
               const Icon = cat.icon ? iconMap[cat.icon] || DefaultIcon : DefaultIcon;
 
               if (cat.projects.length === 0) return null;
@@ -212,7 +212,7 @@ export default function ProjectPageClient({ categories }: { categories: Category
                     </span>
                   </h2>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {cat.projects.map((project) => (
+                    {cat.projects.map((project: Project) => (
                       <ProjectCard key={project.id} project={project} />
                     ))}
                   </div>

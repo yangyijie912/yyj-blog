@@ -83,7 +83,7 @@ export default function DataTable<T>({
             <table className="w-full border-collapse text-sm sm:table-fixed table-auto">
               <thead className="bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300">
                 <tr>
-                  {columns.map((col) => (
+                  {columns.map((col: Column<T>) => (
                     <th
                       key={col.key}
                       className={`px-4 py-3 font-medium ${
@@ -97,12 +97,12 @@ export default function DataTable<T>({
                 </tr>
               </thead>
               <tbody>
-                {data.map((item) => (
+                {data.map((item: T) => (
                   <tr
                     key={keyExtractor(item)}
                     className="border-t border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors"
                   >
-                    {columns.map((col) => (
+                    {columns.map((col: Column<T>) => (
                       <td
                         key={col.key}
                         className={`px-4 py-3 ${

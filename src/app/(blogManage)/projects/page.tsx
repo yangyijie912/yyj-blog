@@ -37,7 +37,9 @@ export default async function ProjectsPage({ searchParams }: { searchParams?: Un
         description: found.description,
         url: found.url,
         linkName: found.linkName,
-        tags: Array.isArray(found.tags) ? found.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+        tags: Array.isArray(found.tags)
+          ? found.tags.filter((tag: unknown): tag is string => typeof tag === 'string')
+          : [],
         categoryId: found.categoryId,
         featured: found.featured,
       };

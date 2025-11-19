@@ -69,7 +69,7 @@ const ClientView: React.FC<ClientViewProps> = ({ post, isAuthor }) => {
     if (Array.isArray(post.tags)) return post.tags as string[];
     if (typeof post.tags === 'string') {
       try {
-        const arr = JSON.parse(post.tags);
+        const arr = JSON.parse(post.tags) as unknown;
         if (Array.isArray(arr)) return arr as string[];
       } catch {}
     }
@@ -152,7 +152,7 @@ const ClientView: React.FC<ClientViewProps> = ({ post, isAuthor }) => {
 
         {tags.length > 0 && (
           <div className="mb-6 flex flex-wrap gap-2">
-            {tags.map((t) => (
+            {tags.map((t: string) => (
               <span key={t} className="tag">
                 #{t}
               </span>

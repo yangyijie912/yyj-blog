@@ -20,7 +20,7 @@ function asStringArray(value: unknown): string[] {
   if (typeof value === 'string') {
     return value
       .split(',')
-      .map((v) => v.trim())
+      .map((v: string) => v.trim())
       .filter(Boolean);
   }
   return [];
@@ -146,7 +146,7 @@ export default async function ProjectDetailPage({ params }: ProjectParamsPromise
               </div>
               <div className="p-5 flex flex-wrap gap-2">
                 {tags.length === 0 && <span className="text-slate-500 text-sm">-</span>}
-                {tags.map((tag, i) => (
+                {tags.map((tag: string, i: number) => (
                   <span
                     key={i}
                     className="px-2 py-0.5 text-[14px] rounded-full bg-slate-800/80 border border-slate-700/60 font-mono"
@@ -226,7 +226,7 @@ export default async function ProjectDetailPage({ params }: ProjectParamsPromise
                 {`{
     "id": "${project.id}",
     "name": "${project.name}",
-    "tags": [${tags.map((t) => '"' + t + '"').join(', ')}],
+    "tags": [${tags.map((t: string) => '"' + t + '"').join(', ')}],
     "featured": ${project.featured},
     "category": "${project.category?.name || ''}"
 }`}

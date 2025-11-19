@@ -27,7 +27,7 @@ export default function LanguageSwitcher({ initialPos }: { initialPos: { x: numb
     try {
       const raw = localStorage.getItem('languageSwitcherPos');
       if (raw) {
-        const parsed = JSON.parse(raw);
+        const parsed = JSON.parse(raw) as { x?: unknown; y?: unknown };
         if (typeof parsed.x === 'number' && typeof parsed.y === 'number') {
           // 挂载后应用位置（useLayoutEffect），以确保服务器和客户端的初始 HTML 匹配
           setPos({ x: parsed.x, y: parsed.y });

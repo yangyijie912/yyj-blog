@@ -60,14 +60,14 @@ export default async function ProjectListPage({ searchParams }: PageProps) {
   });
 
   // 转换数据格式
-  const projects = projectsData.map((proj) => ({
+  const projects = projectsData.map((proj: (typeof projectsData)[0]) => ({
     id: proj.id,
     name: proj.name,
     description: proj.description,
     category: {
       name: proj.category.name,
     },
-    tags: Array.isArray(proj.tags) ? proj.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+    tags: Array.isArray(proj.tags) ? proj.tags.filter((tag: unknown): tag is string => typeof tag === 'string') : [],
     featured: proj.featured,
     createdAt: proj.createdAt,
     updatedAt: proj.updatedAt,

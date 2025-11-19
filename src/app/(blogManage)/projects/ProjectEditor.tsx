@@ -136,7 +136,7 @@ export default function ProjectEditor({ categories, existingProject }: EditorPro
               required
               className="w-full border-2 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all border-gray-300 hover:border-gray-400 bg-white shadow-sm"
             >
-              {categories.map((cat) => (
+              {categories.map((cat: Category) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>

@@ -92,8 +92,8 @@ const iconSets = {
 // 获取所有图标
 const getAllIcons = () => {
   const allIcons: { name: string; label: string; set: string }[] = [];
-  Object.entries(iconSets).forEach(([, setData]) => {
-    Object.entries(setData.icons).forEach(([iconName, label]) => {
+  Object.entries(iconSets).forEach(([, setData]: [string, (typeof iconSets)[keyof typeof iconSets]]) => {
+    Object.entries(setData.icons).forEach(([iconName, label]: [string, string]) => {
       allIcons.push({ name: iconName, label, set: setData.name });
     });
   });
@@ -113,7 +113,7 @@ export default function IconSelector({ value, onChange }: IconSelectorProps) {
   const allIcons = getAllIcons();
 
   // 过滤图标
-  const filteredIcons = allIcons.filter((icon) => {
+  const filteredIcons = allIcons.filter((icon: { name: string; label: string; set: string }) => {
     const matchesSearch =
       icon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       icon.label.toLowerCase().includes(searchTerm.toLowerCase());
@@ -143,7 +143,8 @@ export default function IconSelector({ value, onChange }: IconSelectorProps) {
           <div className="text-left">
             <div className="font-medium">{value || '选择图标'}</div>
             <div className="text-xs text-gray-500">
-              {allIcons.find((i) => i.name === value)?.label || '点击选择图标'}
+              {allIcons.find((i: { name: string; label: string; set: string }) => i.name === value)?.label ||
+                '点击选择图标'}
             </div>
           </div>
         </div>
@@ -196,7 +197,7 @@ export default function IconSelector({ value, onChange }: IconSelectorProps) {
               <div className="text-center text-gray-500 py-8">未找到匹配的图标</div>
             ) : (
               <div className="grid grid-cols-4 gap-2">
-                {filteredIcons.map((icon) => {
+                {filteredIcons.map((icon: { name: string; label: string; set: string }) => {
                   const IconComponent = getIconComponent(icon.name);
                   if (!IconComponent) return null;
 

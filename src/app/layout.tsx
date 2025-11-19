@@ -36,7 +36,7 @@ export default async function RootLayout({
   try {
     const rawPos = cookieStore.get('languageSwitcherPos')?.value;
     if (rawPos) {
-      const parsed = JSON.parse(decodeURIComponent(rawPos));
+      const parsed = JSON.parse(decodeURIComponent(rawPos)) as { x?: unknown; y?: unknown };
       if (parsed && typeof parsed.x === 'number' && typeof parsed.y === 'number') {
         initialLanguageSwitcherPos = { x: parsed.x, y: parsed.y };
       }

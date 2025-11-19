@@ -14,7 +14,7 @@ export default async function Home() {
   });
 
   // 将 Prisma 数据映射到 FeaturedProjects 组件期望的结构
-  const featuredProjects = featuredProjectsRaw.map((p) => {
+  const featuredProjects = featuredProjectsRaw.map((p: (typeof featuredProjectsRaw)[0]) => {
     const tags = Array.isArray(p.tags) ? (p.tags as string[]) : [];
     return {
       id: p.id,

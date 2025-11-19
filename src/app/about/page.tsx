@@ -44,7 +44,7 @@ export default function About() {
           </h1>
           <p className="mt-4 text-lg text-slate-300/90">{t('about.hero.subtitle')}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3 max-w-xl">
-            {badges.map((b) => (
+            {badges.map((b: string) => (
               <span
                 key={b}
                 className="px-4 py-1 rounded-full text-sm bg-slate-800/80 backdrop-blur border border-slate-700/60 hover:border-emerald-500/70 hover:text-emerald-300 transition-colors cursor-default select-none shadow-sm"
@@ -130,7 +130,7 @@ export default function About() {
             {[
               { label: 'Email', href: 'mailto:yangyijie912@163.com' },
               { label: 'GitHub', href: 'https://github.com/yangyijie912' },
-            ].map((a) => {
+            ].map((a: { label: string; href: string }) => {
               const copyValue = a.label === 'Email' ? 'yangyijie912@163.com' : 'https://github.com/yangyijie912';
               return (
                 <div key={a.label} className="relative group">

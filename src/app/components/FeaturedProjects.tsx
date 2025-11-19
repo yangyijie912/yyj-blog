@@ -44,7 +44,7 @@ export default async function FeaturedProjects({ projects = sampleProjects }: { 
         </h2>
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {projects.map((p) => (
+          {projects.map((p: FeaturedProject) => (
             <div
               key={p.id}
               className="group relative rounded-xl border border-slate-800/80 bg-slate-900/60 hover:border-cyan-400/50 transition overflow-hidden"
@@ -54,7 +54,7 @@ export default async function FeaturedProjects({ projects = sampleProjects }: { 
                 <h3 className="text-lg font-semibold group-hover:text-cyan-300 transition">{p.name}</h3>
                 <p className="mt-2 text-sm text-slate-300/90">{p.description}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {(Array.isArray(p.tags) ? p.tags : []).map((t) => (
+                  {(Array.isArray(p.tags) ? p.tags : []).map((t: string) => (
                     <span
                       key={t}
                       className="px-2 py-0.5 text-xs rounded-full bg-slate-800/80 border border-slate-700/60"

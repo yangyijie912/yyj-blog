@@ -26,7 +26,7 @@ export default function TagSelector({ value, onChange, options = TAG_OPTIONS, pl
     requestAnimationFrame(() => inputRef.current?.focus());
   };
 
-  const removeTag = (t: string) => onChange(value.filter((x) => x !== t));
+  const removeTag = (t: string) => onChange(value.filter((x: string) => x !== t));
 
   // 处理键盘事件
   const handleKey = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -42,7 +42,9 @@ export default function TagSelector({ value, onChange, options = TAG_OPTIONS, pl
   // 过滤重复选项，包括已选标签
   const filteredOptions = useMemo(
     () =>
-      options.filter((opt) => opt.toLowerCase().includes(input.toLowerCase())).filter((opt) => !value.includes(opt)),
+      options
+        .filter((opt: string) => opt.toLowerCase().includes(input.toLowerCase()))
+        .filter((opt: string) => !value.includes(opt)),
     [options, input, value]
   );
 
@@ -65,7 +67,7 @@ export default function TagSelector({ value, onChange, options = TAG_OPTIONS, pl
           inputRef.current?.focus();
         }}
       >
-        {value.map((t) => (
+        {value.map((t: string) => (
           <span
             key={t}
             className="group inline-flex items-center gap-1.5 bg-linear-to-r from-blue-100 to-blue-50 text-blue-700 text-xs font-semibold px-3 py-1.5 rounded-full hover:from-blue-200 hover:to-blue-100 transition-all shadow-sm"
@@ -113,7 +115,7 @@ export default function TagSelector({ value, onChange, options = TAG_OPTIONS, pl
               </button>
             </li>
           )}
-          {filteredOptions.map((opt) => (
+          {filteredOptions.map((opt: string) => (
             <li key={opt} className="border-gray-300">
               <button
                 type="button"

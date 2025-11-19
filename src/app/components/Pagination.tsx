@@ -11,7 +11,7 @@ export type PaginationProps = {
   totalPages?: number; // 建议传 total；totalPages 仅用于兼容旧调用
   pageSize?: number; // 每页条数
   basePath?: string; // 例如 "/blog/all"
-  hrefForPage?: (page: number) => string; // 自定义生成链接
+  hrefForPageAction?: (page: number) => string; // 自定义生成链接（客户端函数）
   prevLabel?: string; // 上一页按钮文本
   nextLabel?: string; // 下一页按钮文本
   maxShown?: number; // 最多展示多少个页码按钮（含当前）
@@ -42,7 +42,7 @@ export default function Pagination({
   totalPages,
   pageSize,
   basePath,
-  hrefForPage,
+  hrefForPageAction,
   prevLabel = '上一页',
   nextLabel = '下一页',
   maxShown = 5,
@@ -65,8 +65,8 @@ export default function Pagination({
   const totalPagesCalc = Math.max(1, typeof total === 'number' ? Math.ceil(total / size) : totalPages ?? 1);
 
   const buildHref = (p: number) => {
-    if (hrefForPage) return hrefForPage(p);
-    if (!basePath) throw new Error('Pagination requires either hrefForPage or basePath');
+    if (hrefForPageAction) return hrefForPageAction(p);
+    if (!basePath) throw new Error('Pagination requires either hrefForPageAction or basePath');
     return `${basePath}${makeQuery(p, pageSize)}`;
   };
 
@@ -97,7 +97,7 @@ export default function Pagination({
             aria-label="每页条数"
             className="h-9 rounded-lg bg-slate-800/70 border border-slate-700/60 px-3 text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400/50 cursor-pointer hover:border-emerald-400/60"
           >
-            {pageSizeOptions.map((opt) => (
+            {pageSizeOptions.map((opt: number) => (
               <option key={opt} value={opt} className="cursor-pointer">
                 {opt}
                 {t.itemsPerPageSuffix}
@@ -133,7 +133,7 @@ export default function Pagination({
           </>
         )}
 
-        {pages.map((p) => (
+        {pages.map((p: number) => (
           <Link
             key={p}
             href={buildHref(p)}

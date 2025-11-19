@@ -15,8 +15,8 @@ export async function GET() {
 // 设置主题偏好
 export async function POST(req: Request) {
   try {
-    const body = await req.json().catch(() => ({}));
-    const theme = (body?.theme || '').toString() as Theme;
+    const body = (await req.json().catch(() => ({}))) as { theme?: unknown };
+    const theme = String(body?.theme || '') as Theme;
     if (!['light', 'dark', 'system'].includes(theme)) {
       return NextResponse.json({ ok: false, message: 'invalid theme' }, { status: 400 });
     }

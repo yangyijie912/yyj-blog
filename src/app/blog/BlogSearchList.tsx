@@ -40,7 +40,7 @@ export default function BlogSearchList({
   const filtered = useMemo(() => {
     const kw = keyword.trim().toLowerCase();
     if (!kw) return posts;
-    return posts.filter((p) => {
+    return posts.filter((p: BlogListItem) => {
       const title = p.title?.toLowerCase?.() ?? '';
       const intro = (p.intro ?? '')?.toLowerCase?.();
       const tagStr = toTags(p.tags).join(' ').toLowerCase();
@@ -89,7 +89,7 @@ export default function BlogSearchList({
 
       {/* List */}
       <ul className={listClass}>
-        {filtered.map((p) => (
+        {filtered.map((p: BlogListItem) => (
           <li
             key={p.id}
             className="group rounded-xl border border-slate-800/80 bg-slate-900/60 hover:border-emerald-500/50 transition overflow-hidden h-full"
@@ -104,7 +104,7 @@ export default function BlogSearchList({
                 </span>
                 {toTags(p.tags).length > 0 && <span>·</span>}
                 <span className="flex flex-wrap gap-2">
-                  {toTags(p.tags).map((t) => (
+                  {toTags(p.tags).map((t: string) => (
                     <span
                       key={t}
                       className="px-2 py-0.5 text-[11px] rounded-full bg-slate-800/80 border border-slate-700/60"

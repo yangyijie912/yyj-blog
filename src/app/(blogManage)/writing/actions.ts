@@ -26,7 +26,7 @@ export async function createPost(formData: FormData): Promise<ActionResultWithId
     new Set(
       tagsRaw
         .split(/[,\n]/)
-        .map((t) => t.trim())
+        .map((t: string) => t.trim())
         .filter(Boolean)
     )
   );
@@ -70,7 +70,7 @@ export async function updatePost(formData: FormData): Promise<ActionResultWithId
     new Set(
       tagsRaw
         .split(/[,\n]/)
-        .map((t) => t.trim())
+        .map((t: string) => t.trim())
         .filter(Boolean)
     )
   );

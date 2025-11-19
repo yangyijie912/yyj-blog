@@ -118,7 +118,7 @@ export default function Sidebar() {
           <div>
             <nav aria-label="主导航">
               <ul className="list-none m-0 p-0 flex flex-col gap-2">
-                {navItems.map((item) => {
+                {navItems.map((item: NavItem) => {
                   const Icon = item.icon;
                   const active = isActive(item.href);
 

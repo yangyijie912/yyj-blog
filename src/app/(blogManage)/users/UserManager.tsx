@@ -50,7 +50,7 @@ export default function UserList({ users, total, page, pageSize, q = '', sortBy 
     const sp = new URLSearchParams();
     if (keyword) sp.set('q', keyword);
     if (sortBy) sp.set('sortBy', sortBy);
-    Object.entries(params).forEach(([k, v]) => {
+    Object.entries(params).forEach(([k, v]: [string, string | number | undefined]) => {
       if (v === undefined || v === '') sp.delete(k);
       else sp.set(k, String(v));
     });
