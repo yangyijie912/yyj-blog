@@ -1,12 +1,12 @@
 import { getRequestConfig } from 'next-intl/server';
-import path from 'path';
-import fs from 'fs/promises';
 import { locales, defaultLocale, type Locale } from './locales';
 
 export async function loadMessages(locale: Locale) {
-  const file = path.join(process.cwd(), 'src', 'i18n', 'messages', `${locale}.json`);
-  const data = await fs.readFile(file, 'utf-8');
-  const flat = JSON.parse(data) as Record<string, string>;
+  // 使用动态导入而不是文件系统读取，确保文件被打包
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const messages = await import(`./messages/${locale}.json`);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const flat = messages.default as Record<string, string>;
 
   // 将 "a.b.c": "..." 形式转换为嵌套对象结构，兼容 next-intl 默认验证
   interface NestedMessages {
