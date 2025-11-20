@@ -1,3 +1,10 @@
+/**
+ * 全局的可拖拽语言切换按钮组件
+ * 位于页面右上角，默认锚定在右上角，可拖动到任意位置
+ * 位置保存在 localStorage 和 cookie 中以便跨页面和刷新保持一致
+ * 使用方法：将 <LanguageSwitcher /> 组件放在根布局或页面中，参考layout.tsx
+ */
+
 'use client';
 
 import React, { useLayoutEffect, useRef, useState, useTransition } from 'react';
@@ -15,8 +22,8 @@ export default function LanguageSwitcher({ initialPos }: { initialPos: { x: numb
   const [pos, setPos] = useState<{ x: number; y: number } | null>(initialPos ?? null);
   const [isDragging, setIsDragging] = useState(false); // 是否正在拖拽
   const draggingRef = useRef(false); // 拖拽状态的 ref，避免事件处理器闭包问题
-  const startRef = useRef({ x: 0, y: 0 }); // 拖拽起始点
-  const originRef = useRef({ x: 0, y: 0 }); // 拖拽目标点
+  const startRef = useRef({ x: 0, y: 0 }); // 指针按下时的坐标
+  const originRef = useRef({ x: 0, y: 0 }); // 拖拽起始时按钮的位置，和上面的坐标配合使用
   const preventClickRef = useRef(false); // 用于阻止点击事件（如果是拖拽的话）
   const moveScheduledRef = useRef<number | null>(null); // 用于节流位置更新的动画帧 ID
   const pendingPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 }); // 用于存储待应用的位置

@@ -12,6 +12,7 @@ import { IoPersonCircleSharp } from 'react-icons/io5';
 import { HiOutlineMenu, HiX } from 'react-icons/hi';
 import { type ElementType } from 'react';
 import classnames from 'classnames';
+import LanguageSwitcherSidebar from './LanguageSwitcherSidebar';
 
 interface NavItem {
   href: string;
@@ -81,9 +82,10 @@ export default function Sidebar() {
         )}
         aria-label={t('sidebar.aria.label')}
       >
+        <LanguageSwitcherSidebar />
         {/* 小屏关闭按钮 */}
         <div className="md:hidden absolute top-3 left-3 right-3 flex items-center justify-between z-50">
-          <h2 className="text-lg font-semibold">{t('sidebar.toggle.title')}</h2>
+          <h2 className="text-lg font-semibold"></h2>
           <button aria-label={t('sidebar.toggle.close')} className="p-2" onClick={() => setOpen(false)}>
             <HiX className="w-6 h-6 text-white" />
           </button>

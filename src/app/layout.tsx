@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Sidebar from './components/Sidebar';
 import ToastManager from './components/ToastManager';
-import LanguageSwitcher from './components/LanguageSwitcher';
+// import LanguageSwitcher from './components/LanguageSwitcher';
 // import Footer from './components/Footer';
 import './globals.css';
 import { cookies } from 'next/headers';
@@ -9,7 +9,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import { locales, defaultLocale } from '@/i18n/locales';
 import { loadMessages } from '@/i18n/request';
-// Markdown 编辑器样式（Bytemd 在各自组件内引入）
 
 export const metadata: Metadata = {
   title: "yyj's blog",
@@ -31,19 +30,23 @@ export default async function RootLayout({
   const cookieLocale = cookieStore.get('locale')?.value as Locale | undefined;
   const locale: Locale = cookieLocale && locales.includes(cookieLocale) ? cookieLocale : defaultLocale;
   const messages = await loadMessages(locale);
-  // try to parse saved language switcher position from cookie so server can render it
-  let initialLanguageSwitcherPos: { x: number; y: number } | undefined = undefined;
-  try {
-    const rawPos = cookieStore.get('languageSwitcherPos')?.value;
-    if (rawPos) {
-      const parsed = JSON.parse(decodeURIComponent(rawPos)) as { x?: unknown; y?: unknown };
-      if (parsed && typeof parsed.x === 'number' && typeof parsed.y === 'number') {
-        initialLanguageSwitcherPos = { x: parsed.x, y: parsed.y };
-      }
-    }
-  } catch {
-    // ignore parse errors
-  }
+
+  // 全局的语言切换组件
+  // 从 cookie 中解析保存的语言切换器位置，让服务器可以渲染它
+  // 这样可以避免初始渲染时位置跳动的问题
+  //   let initialLanguageSwitcherPos: { x: number; y: number } | undefined = undefined;
+  //   try {
+  //     const rawPos = cookieStore.get('languageSwitcherPos')?.value;
+  //     if (rawPos) {
+  //       const parsed = JSON.parse(decodeURIComponent(rawPos)) as { x?: unknown; y?: unknown };
+  //       if (parsed && typeof parsed.x === 'number' && typeof parsed.y === 'number') {
+  //         initialLanguageSwitcherPos = { x: parsed.x, y: parsed.y };
+  //       }
+  //     }
+  //   } catch {
+  //     // ignore parse errors
+  //   }
+
   return (
     <html lang={locale} data-theme={initialThemeAttr}>
       <head>
@@ -67,7 +70,7 @@ export default async function RootLayout({
               {/* <Footer /> */}
             </div>
           </div>
-          <LanguageSwitcher initialPos={initialLanguageSwitcherPos ?? null} />
+          {/* <LanguageSwitcher initialPos={initialLanguageSwitcherPos ?? null} /> */}
           <ToastManager />
         </NextIntlClientProvider>
       </body>
