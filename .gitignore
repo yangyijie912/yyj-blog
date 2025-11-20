@@ -45,3 +45,6 @@ next-env.d.ts
 # uploaded files
 /public/uploads/*
 !/public/uploads/.gitkeep
+
+# 一些没必要上传的本地测试工具
+/scripts/tools/*
