@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Sidebar from './components/Sidebar';
 import ToastManager from './components/ToastManager';
 import LanguageSwitcher from './components/LanguageSwitcher';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import './globals.css';
 import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
@@ -64,7 +64,7 @@ export default async function RootLayout({
             <Sidebar />
             <div className="content">
               <main className="main">{children}</main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
           </div>
           <LanguageSwitcher initialPos={initialLanguageSwitcherPos ?? null} />
