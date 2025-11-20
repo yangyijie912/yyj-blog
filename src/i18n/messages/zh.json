@@ -72,7 +72,7 @@
   "user.edit.btn": "编辑",
   "user.password.btn": "改密",
   "user.delete.btn": "删除",
-  "user.delete.confirm": "确定要删除该用户吗？这将同时删除该用户的所有文章和项目。",
+  "user.delete.confirm": "确定要删除该用户吗？",
   "user.delete.success": "用户已删除",
   "user.delete.failure": "删除失败",
   "user.toast.updateSuccess": "用户更新成功！",

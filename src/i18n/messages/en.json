@@ -72,7 +72,7 @@
   "user.edit.btn": "Edit",
   "user.password.btn": "Change Pwd",
   "user.delete.btn": "Delete",
-  "user.delete.confirm": "Confirm delete this user? All posts & projects will be removed.",
+  "user.delete.confirm": "Confirm delete this user?",
   "user.delete.success": "User deleted",
   "user.delete.failure": "Delete failed",
   "user.toast.updateSuccess": "User updated successfully!",
