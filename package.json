@@ -27,6 +27,7 @@
     "@bytemd/plugin-highlight": "^1.22.0",
     "@bytemd/react": "^1.22.0",
     "@prisma/client": "^6.19.0",
+    "@vercel/blob": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "bytemd": "^1.22.0",
     "classnames": "^2.5.1",
