@@ -2,6 +2,7 @@ import React from 'react';
 import ProjectList from './ProjectList';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/db';
+import { Prisma } from '@prisma/client';
 
 interface PageProps {
   searchParams: Promise<{
@@ -40,12 +41,8 @@ export default async function ProjectListPage({ searchParams }: PageProps) {
     select: { id: true, name: true },
   });
 
-  // 解析排序参数
-  const [sortField, sortOrder] = sortBy.split('-');
-  const orderBy =
-    sortField === 'updatedAt'
-      ? { updatedAt: (sortOrder || 'desc') as 'asc' | 'desc' }
-      : { createdAt: (sortOrder || 'desc') as 'asc' | 'desc' };
+  // 优先按 featured, 再按 updatedAt 降序排序（保持优先展示精选）
+  const orderBy: Prisma.ProjectOrderByWithRelationInput[] = [{ featured: 'desc' }, { updatedAt: 'desc' }];
 
   const projectsData = await prisma.project.findMany({
     where,
@@ -65,7 +62,7 @@ export default async function ProjectListPage({ searchParams }: PageProps) {
     name: proj.name,
     description: proj.description,
     category: {
-      name: proj.category.name,
+      name: proj.category?.name ?? '',
     },
     tags: Array.isArray(proj.tags) ? proj.tags.filter((tag: unknown): tag is string => typeof tag === 'string') : [],
     featured: proj.featured,

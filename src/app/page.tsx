@@ -9,7 +9,7 @@ export default async function Home() {
   // 查询最新三个精选项目（featured = true），按创建时间倒序
   const featuredProjectsRaw = await prisma.project.findMany({
     where: { featured: true },
-    orderBy: { createdAt: 'desc' },
+    orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
     take: 3,
   });
 

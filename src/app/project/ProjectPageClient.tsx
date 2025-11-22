@@ -44,11 +44,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div className="relative p-5 flex flex-col h-full">
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-semibold group-hover:text-cyan-300 transition">{project.name}</h3>
-          {project.featured && (
+          {/* 精选标签，暂且隐藏 */}
+          {/* {project.featured && (
             <span className="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30">
               {t('project.featured')}
             </span>
-          )}
+          )} */}
         </div>
         {project.description && (
           <p className="mt-2 text-sm text-slate-300/90 flex-1 line-clamp-2">{project.description}</p>

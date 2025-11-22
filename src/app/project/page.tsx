@@ -8,7 +8,7 @@ export default async function ProjectPage() {
     orderBy: { order: 'asc' },
     include: {
       projects: {
-        orderBy: { createdAt: 'desc' },
+        orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
       },
     },
   });
