@@ -29,16 +29,10 @@ export default async function BlogListPage({ searchParams }: PageProps) {
 
   const total = await prisma.post.count({ where });
 
-  // 解析排序参数
-  const [sortField, sortOrder] = sortBy.split('-');
-  const orderBy =
-    sortField === 'updatedAt'
-      ? { updatedAt: (sortOrder || 'desc') as 'asc' | 'desc' }
-      : { createdAt: (sortOrder || 'desc') as 'asc' | 'desc' };
-
+  // 优先按 featured，再按 updatedAt 降序排序（保持固定行为）
   const postsData = await prisma.post.findMany({
     where,
-    orderBy,
+    orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
     skip: (page - 1) * pageSize,
     take: pageSize,
   });

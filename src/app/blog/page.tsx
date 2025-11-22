@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 const Blog = async () => {
   const t = await getTranslations();
   const posts = await prisma.post.findMany({
-    orderBy: { updatedAt: 'desc' },
+    orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
     select: {
       id: true,
       title: true,

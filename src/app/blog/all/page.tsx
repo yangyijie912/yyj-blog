@@ -21,12 +21,13 @@ export default async function BlogAll({ searchParams }: Props) {
   const [total, posts] = await Promise.all([
     prisma.post.count(),
     prisma.post.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
       select: {
         id: true,
         title: true,
         intro: true,
         createdAt: true,
+        updatedAt: true,
         tags: true,
       },
       skip: (page - 1) * pageSize,

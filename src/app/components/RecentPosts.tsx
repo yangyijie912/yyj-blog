@@ -11,8 +11,8 @@ export default async function RecentPostsDB({
 }) {
   const t = await getTranslations();
   const posts = await prisma.post.findMany({
-    orderBy: { createdAt: 'desc' },
-    select: { id: true, title: true, intro: true, createdAt: true, tags: true },
+    orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
+    select: { id: true, title: true, intro: true, createdAt: true, updatedAt: true, tags: true },
     take,
   });
 
