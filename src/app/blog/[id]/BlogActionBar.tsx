@@ -74,6 +74,7 @@ const BlogActionBar: React.FC<BlogActionBarProps> = ({
                   <>
                     <Link
                       href={`/writing?edit=${encodeURIComponent(postId)}&from=detail`}
+                      replace
                       className={classnames(btnStyle)}
                     >
                       <MdEdit /> <span className="hidden sm:inline">{t('blogAction.edit')}</span>

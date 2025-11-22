@@ -78,8 +78,12 @@ const Editor: React.FC<EditorProps> = ({ createAction, updateAction, existingPos
           // 默认从列表页进入
           let target = new URL('/blog-list', window.location.origin);
           if (fromDetail) {
-            // 从详情页进入，返回详情页并显示toast
+            // 从详情页进入，返回详情页并显示toast —— 使用 replace 替换历史，避免回退再回到编辑页
             target = new URL(`/blog/${res.id}`, window.location.origin);
+            target.searchParams.set('toast', t('writing.toast.updateSuccess'));
+            target.searchParams.set('toast_type', 'success');
+            router.replace(target.pathname + target.search);
+            return;
           }
           target.searchParams.set('toast', t('writing.toast.updateSuccess'));
           target.searchParams.set('toast_type', 'success');

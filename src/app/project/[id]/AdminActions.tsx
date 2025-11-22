@@ -46,6 +46,7 @@ export default function AdminActions({ id }: { id: string }) {
     <div className="flex gap-3">
       <Link
         href={`/projects?edit=${id}&from=detail`}
+        replace
         className="inline-flex items-center gap-2 px-3 py-2 rounded-md border border-slate-700/60 bg-slate-800/60 text-sm hover:border-cyan-400/60 hover:text-cyan-200 transition"
       >
         <FaEdit /> {t('project.action.edit')}
