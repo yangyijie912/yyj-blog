@@ -42,7 +42,7 @@ export default function ProjectList({
   page,
   pageSize,
   q = '',
-  sortBy = 'createdAt-desc',
+  sortBy = '',
   categoryId = '',
   categories,
 }: ProjectListProps) {
@@ -63,6 +63,18 @@ export default function ProjectList({
       else sp.set(k, String(v));
     });
     router.push(`/project-list?${sp.toString()}`);
+  };
+
+  // 用于分页组件：构建保留当前筛选参数的链接
+  const hrefForPageAction = (p: number) => {
+    const sp = new URLSearchParams();
+    if (keyword) sp.set('q', keyword);
+    if (sortBy) sp.set('sortBy', sortBy);
+    if (categoryId) sp.set('categoryId', categoryId);
+    if (p > 1) sp.set('page', String(p));
+    if (pageSize && pageSize !== 10) sp.set('pageSize', String(pageSize));
+    const qs = sp.toString();
+    return qs ? `/project-list?${qs}` : '/project-list';
   };
 
   const handleSearch = () => {
@@ -195,6 +207,7 @@ export default function ProjectList({
         page={page}
         pageSize={pageSize}
         basePath="/project-list"
+        hrefForPageAction={hrefForPageAction}
         title={t('project.page.title')}
         backLink={{ href: '/dashboard', label: t('project.back.label') }}
         actions={
@@ -266,6 +279,7 @@ export default function ProjectList({
                 onChange={(e) => updateQuery({ sortBy: e.target.value, page: 1 })}
                 className="px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-slate-800 dark:border-slate-600 dark:text-white text-sm w-full sm:min-w-[180px]"
               >
+                <option value="">{t('project.sort.default')}</option>
                 <option value="createdAt-desc">{t('project.sort.createdAt.desc')}</option>
                 <option value="createdAt-asc">{t('project.sort.createdAt.asc')}</option>
                 <option value="updatedAt-desc">{t('project.sort.updatedAt.desc')}</option>

@@ -2,6 +2,7 @@ import React from 'react';
 import BlogList from './BlogList';
 import { requireAuth } from '@/lib/auth';
 import { prisma } from '@/db';
+import { Prisma } from '@prisma/client';
 
 interface PageProps {
   searchParams: Promise<{
@@ -19,7 +20,7 @@ export default async function BlogListPage({ searchParams }: PageProps) {
   const q = (params?.q ?? '').trim();
   const page = Math.max(1, parseInt(params?.page ?? '1', 10) || 1);
   const pageSize = Math.min(50, Math.max(5, parseInt(params?.pageSize ?? '10', 10) || 10));
-  const sortBy = params?.sortBy ?? 'createdAt-desc';
+  const sortBy = params?.sortBy ?? '';
 
   const where = q
     ? {
@@ -29,10 +30,21 @@ export default async function BlogListPage({ searchParams }: PageProps) {
 
   const total = await prisma.post.count({ where });
 
-  // 优先按 featured，再按 updatedAt 降序排序（保持固定行为）
+  // 解析排序参数：若无用户选择（sortBy 为空），则使用默认排序：featured + updatedAt 降序。
+  let orderBy: Prisma.PostOrderByWithRelationInput[] | Prisma.PostOrderByWithRelationInput;
+  if (!sortBy) {
+    orderBy = [{ featured: 'desc' }, { updatedAt: 'desc' }];
+  } else {
+    const [sortField, sortOrder] = sortBy.split('-');
+    orderBy =
+      sortField === 'updatedAt'
+        ? { updatedAt: (sortOrder || 'desc') as 'asc' | 'desc' }
+        : { createdAt: (sortOrder || 'desc') as 'asc' | 'desc' };
+  }
+
   const postsData = await prisma.post.findMany({
     where,
-    orderBy: [{ featured: 'desc' }, { updatedAt: 'desc' }],
+    orderBy,
     skip: (page - 1) * pageSize,
     take: pageSize,
   });

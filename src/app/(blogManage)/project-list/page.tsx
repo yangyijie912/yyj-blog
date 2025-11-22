@@ -21,7 +21,7 @@ export default async function ProjectListPage({ searchParams }: PageProps) {
   const q = (params?.q ?? '').trim();
   const page = Math.max(1, parseInt(params?.page ?? '1', 10) || 1);
   const pageSize = Math.min(50, Math.max(5, parseInt(params?.pageSize ?? '10', 10) || 10));
-  const sortBy = params?.sortBy ?? 'createdAt-desc';
+  const sortBy = params?.sortBy ?? '';
   const categoryId = params?.categoryId ?? '';
 
   const where = q
@@ -41,8 +41,17 @@ export default async function ProjectListPage({ searchParams }: PageProps) {
     select: { id: true, name: true },
   });
 
-  // 优先按 featured, 再按 updatedAt 降序排序（保持优先展示精选）
-  const orderBy: Prisma.ProjectOrderByWithRelationInput[] = [{ featured: 'desc' }, { updatedAt: 'desc' }];
+  // 解析排序参数：若无用户选择（sortBy 为空），则使用默认排序：featured + updatedAt 降序。
+  let orderBy: Prisma.ProjectOrderByWithRelationInput[] | Prisma.ProjectOrderByWithRelationInput;
+  if (!sortBy) {
+    orderBy = [{ featured: 'desc' }, { updatedAt: 'desc' }];
+  } else {
+    const [sortField, sortOrder] = sortBy.split('-');
+    orderBy =
+      sortField === 'updatedAt'
+        ? { updatedAt: (sortOrder || 'desc') as 'asc' | 'desc' }
+        : { createdAt: (sortOrder || 'desc') as 'asc' | 'desc' };
+  }
 
   const projectsData = await prisma.project.findMany({
     where,

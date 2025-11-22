@@ -31,7 +31,7 @@ interface BlogListProps {
   sortBy?: string;
 }
 
-export default function BlogList({ posts, total, page, pageSize, q = '', sortBy = 'createdAt-desc' }: BlogListProps) {
+export default function BlogList({ posts, total, page, pageSize, q = '', sortBy = '' }: BlogListProps) {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [keyword, setKeyword] = useState(q);
@@ -48,6 +48,17 @@ export default function BlogList({ posts, total, page, pageSize, q = '', sortBy 
       else sp.set(k, String(v));
     });
     router.push(`/blog-list?${sp.toString()}`);
+  };
+
+  // 用于分页组件：构建保留当前筛选参数的链接
+  const hrefForPageAction = (p: number) => {
+    const sp = new URLSearchParams();
+    if (keyword) sp.set('q', keyword);
+    if (sortBy) sp.set('sortBy', sortBy);
+    if (p > 1) sp.set('page', String(p));
+    if (pageSize && pageSize !== 10) sp.set('pageSize', String(pageSize));
+    const qs = sp.toString();
+    return qs ? `/blog-list?${qs}` : '/blog-list';
   };
 
   const handleSearch = () => {
@@ -166,6 +177,7 @@ export default function BlogList({ posts, total, page, pageSize, q = '', sortBy 
         page={page}
         pageSize={pageSize}
         basePath="/blog-list"
+        hrefForPageAction={hrefForPageAction}
         title={t('blog.manage.title')}
         backLink={{ href: '/dashboard', label: t('blog.manage.back') }}
         actions={
@@ -220,6 +232,7 @@ export default function BlogList({ posts, total, page, pageSize, q = '', sortBy 
                 onChange={(e) => updateQuery({ sortBy: e.target.value, page: 1 })}
                 className="px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 dark:bg-slate-800 dark:border-slate-600 dark:text-white text-sm w-full sm:min-w-[180px]"
               >
+                <option value="">{t('blog.sort.default')}</option>
                 <option value="createdAt-desc">{t('blog.sort.createdAt.desc')}</option>
                 <option value="createdAt-asc">{t('blog.sort.createdAt.asc')}</option>
                 <option value="updatedAt-desc">{t('blog.sort.updatedAt.desc')}</option>

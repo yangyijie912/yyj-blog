@@ -23,6 +23,7 @@ export interface DataTableProps<T> {
   page?: number;
   pageSize?: number;
   basePath?: string;
+  hrefForPageAction?: (page: number) => string;
 
   // 头部
   title?: string;
@@ -43,6 +44,7 @@ export default function DataTable<T>({
   page = 1,
   pageSize = 10,
   basePath,
+  hrefForPageAction,
   title,
   backLink,
   actions,
@@ -182,6 +184,7 @@ export default function DataTable<T>({
                 total={total}
                 pageSize={pageSize}
                 basePath={basePath}
+                hrefForPageAction={hrefForPageAction}
                 showPageSize={true}
                 showJump={true}
                 prevLabel={t('pagination.prev')}
