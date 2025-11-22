@@ -8,6 +8,7 @@ import { getTranslations } from 'next-intl/server';
 import { FaExternalLinkAlt, FaTag, FaClock, FaFolderOpen, FaArrowLeft, FaStar } from 'react-icons/fa';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 import classnames from 'classnames';
 
 interface ProjectParamsPromiseProps {
@@ -130,7 +131,7 @@ export default async function ProjectDetailPage({ params }: ProjectParamsPromise
               </div>
               <div className="p-5">
                 {project.description ? (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} components={MDComponents}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]} components={MDComponents}>
                     {project.description}
                   </ReactMarkdown>
                 ) : (

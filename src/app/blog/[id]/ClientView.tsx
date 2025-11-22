@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 import { useRouter } from 'next/navigation';
 import classnames from 'classnames';
 import BlogActionBar from './BlogActionBar';
@@ -161,7 +162,7 @@ const ClientView: React.FC<ClientViewProps> = ({ post, isAuthor }) => {
         )}
 
         <div className={classnames('rounded markdown-body', { 'markdown-body-dark': isDark })}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>{post.content}</ReactMarkdown>
         </div>
       </div>
     </article>
