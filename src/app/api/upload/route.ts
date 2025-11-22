@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAuthAndCsrf } from '@/lib/auth';
 import { uploadFiles } from '@/lib/storage';
+import type { UploadResult } from '@/lib/storage';
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function POST(request: NextRequest) {
 
     // 使用统一的存储适配器上传文件
     const results = await uploadFiles(files);
-    const uploadedUrls = results.map((result) => result.url);
+    const uploadedUrls = results.map((result: UploadResult) => result.url);
 
     return NextResponse.json({ urls: uploadedUrls });
   } catch (error) {
