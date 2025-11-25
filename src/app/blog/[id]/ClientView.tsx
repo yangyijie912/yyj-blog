@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import 'highlight.js/styles/github.css';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -78,6 +79,28 @@ const ClientView: React.FC<ClientViewProps> = ({ post, isAuthor }) => {
   }, [post.tags]);
 
   const isDark = theme === 'dark';
+
+  // 客户端代码高亮：动态加载 highlight.js 并高亮页面内所有代码块
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const mod = await import('highlight.js');
+        type HLJSLike = { highlightElement: (el: HTMLElement) => void };
+        const hljs = (mod as unknown as { default?: HLJSLike }).default ?? (mod as unknown as HLJSLike);
+        if (!mounted || !hljs) return;
+        const nodes = document.querySelectorAll<HTMLElement>('pre code');
+        nodes.forEach((block) => {
+          try {
+            hljs.highlightElement(block);
+          } catch {}
+        });
+      } catch {}
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [post.content]);
 
   // 处理删除
   const handleDelete = async () => {

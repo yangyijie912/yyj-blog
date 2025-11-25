@@ -25,9 +25,7 @@ const Blog = async () => {
     <section className="w-full bg-[#0B1220] text-slate-100 pt-6 sm:pt-0">
       <div className="px-6 md:px-10 lg:px-14 py-12 md:py-16 max-w-6xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{t('blogPage.title')}</h1>
-        <p className="mt-3 text-slate-300/90 max-w-2xl text-sm md:text-base leading-relaxed">
-          {t('blogPage.subtitle')}
-        </p>
+        <p className="mt-3 text-slate-300/90 text-sm md:text-base leading-relaxed">{t('blogPage.subtitle')}</p>
         {/* 搜索 + 列表（仅展示 6 条） */}
         <BlogSearchList posts={posts} dateField="updatedAt" dateLabel={t('blogPage.dateLabel.updated')} />
 
