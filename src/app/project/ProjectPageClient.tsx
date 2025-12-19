@@ -43,9 +43,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             </span>
           )} */}
         </div>
-        {project.description && (
-          <p className="mt-2 text-sm text-slate-300/90 flex-1 line-clamp-2">{project.description}</p>
-        )}
+        {project.description && <p className="mt-2 text-sm text-slate-300/90 line-clamp-3">{project.description}</p>}
         {project.tags.length > 0 && (
           <div className="mt-4 flex flex-wrap gap-2">
             {project.tags.map((tag, idx) => (
