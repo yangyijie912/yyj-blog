@@ -187,7 +187,7 @@ const Editor: React.FC<EditorProps> = ({ createAction, updateAction, existingPos
           </div>
         </div>
 
-        <div className="sticky bottom-0 left-0 right-0 flex flex-nowrap justify-center gap-2 sm:gap-4 pt-2 px-3 sm:px-0 bg-white/0 sm:bg-transparent overflow-x-auto">
+        <div className="flex flex-nowrap justify-center gap-2 sm:gap-4 pt-2 px-3 sm:px-0 bg-white/0 sm:bg-transparent overflow-x-auto">
           <button
             type="button"
             onClick={() => router.push('/blog-list')}

@@ -220,8 +220,8 @@ export default function ProjectEditor({ categories, existingProject }: EditorPro
           </div>
         </div>
 
-        {/* 第四行：底部操作栏（粘底） */}
-        <div className="sticky bottom-0 left-0 right-0 flex flex-nowrap justify-center gap-2 sm:gap-4 pt-2 px-3 sm:px-0 bg-white/0 sm:bg-transparent overflow-x-auto">
+        {/* 第四行：底部操作栏 */}
+        <div className="flex flex-nowrap justify-center gap-2 sm:gap-4 pt-2 px-3 sm:px-0 bg-white/0 sm:bg-transparent overflow-x-auto">
           <button
             type="button"
             onClick={() => router.push('/project-list')}
