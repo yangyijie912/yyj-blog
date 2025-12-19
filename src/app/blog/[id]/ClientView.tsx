@@ -90,7 +90,7 @@ const ClientView: React.FC<ClientViewProps> = ({ post, isAuthor }) => {
         const hljs = (mod as unknown as { default?: HLJSLike }).default ?? (mod as unknown as HLJSLike);
         if (!mounted || !hljs) return;
         const nodes = document.querySelectorAll<HTMLElement>('pre code');
-        nodes.forEach((block) => {
+        nodes.forEach((block: HTMLElement) => {
           try {
             hljs.highlightElement(block);
           } catch {}

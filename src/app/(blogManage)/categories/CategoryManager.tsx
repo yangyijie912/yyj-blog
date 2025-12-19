@@ -4,6 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+import * as FaIcons from 'react-icons/fa';
+import * as MdIcons from 'react-icons/md';
+import * as AiIcons from 'react-icons/ai';
+import * as BiIcons from 'react-icons/bi';
+import * as BsIcons from 'react-icons/bs';
+import type { IconType } from 'react-icons';
 import { createCategory, updateCategory, deleteCategory } from '../projects/actions';
 import IconSelector from '@/app/components/IconSelector';
 import Modal from '@/app/components/Modal';
@@ -43,6 +49,20 @@ export default function CategoryManager({
   const [isAdding, setIsAdding] = useState(false);
   const [formData, setFormData] = useState({ name: '', icon: 'FaLaptopCode', order: 0 });
   const [keyword, setKeyword] = useState(q);
+
+  // 合并所有图标集合并按名称查找对应组件（统一类型）
+  const allIconComponents: Record<string, IconType> = {
+    ...(FaIcons as Record<string, IconType>),
+    ...(MdIcons as Record<string, IconType>),
+    ...(AiIcons as Record<string, IconType>),
+    ...(BiIcons as Record<string, IconType>),
+    ...(BsIcons as Record<string, IconType>),
+  };
+
+  const getIconComponent = (iconName?: string | null): IconType | null => {
+    if (!iconName) return null;
+    return allIconComponents[iconName] ?? null;
+  };
 
   const handleSearch = () => {
     const sp = new URLSearchParams();
@@ -138,7 +158,11 @@ export default function CategoryManager({
       title: t('category.col.icon'),
       align: 'left',
       width: '20%',
-      render: (cat) => <span className="text-gray-500">{cat.icon ?? '-'}</span>,
+      render: (cat) => {
+        const IconComp = getIconComponent(cat.icon);
+        if (!IconComp) return <span className="text-gray-500">-</span>;
+        return <IconComp className="text-xl text-blue-600" />;
+      },
     },
     {
       key: 'order',
