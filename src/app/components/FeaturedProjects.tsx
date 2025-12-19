@@ -52,7 +52,9 @@ export default async function FeaturedProjects({ projects = sampleProjects }: { 
               <div className="absolute inset-0 bg-linear-to-br from-cyan-400/5 via-transparent to-emerald-400/5 opacity-0 group-hover:opacity-100 transition" />
               <div className="relative p-5 flex flex-col h-full">
                 <h3 className="text-lg font-semibold group-hover:text-cyan-300 transition">{p.name}</h3>
-                <p className="mt-2 text-sm text-slate-300/90">{p.description}</p>
+                <p title={p.description || undefined} className="mt-2 text-sm text-slate-300/90 line-clamp-3">
+                  {p.description}
+                </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {(Array.isArray(p.tags) ? p.tags : []).map((t: string) => (
                     <span

@@ -457,3 +457,11 @@ button {
     overflow: visible;
   }
 }
+
+/* 文本多行溢出省略 */
+.line-clamp-3 {
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
