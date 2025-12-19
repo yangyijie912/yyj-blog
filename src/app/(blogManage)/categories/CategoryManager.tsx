@@ -4,12 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
-import * as FaIcons from 'react-icons/fa';
-import * as MdIcons from 'react-icons/md';
-import * as AiIcons from 'react-icons/ai';
-import * as BiIcons from 'react-icons/bi';
-import * as BsIcons from 'react-icons/bs';
-import type { IconType } from 'react-icons';
+import { getIconComponent } from '@/lib/icon';
 import { createCategory, updateCategory, deleteCategory } from '../projects/actions';
 import IconSelector from '@/app/components/IconSelector';
 import Modal from '@/app/components/Modal';
@@ -50,19 +45,7 @@ export default function CategoryManager({
   const [formData, setFormData] = useState({ name: '', icon: 'FaLaptopCode', order: 0 });
   const [keyword, setKeyword] = useState(q);
 
-  // 合并所有图标集合并按名称查找对应组件（统一类型）
-  const allIconComponents: Record<string, IconType> = {
-    ...(FaIcons as Record<string, IconType>),
-    ...(MdIcons as Record<string, IconType>),
-    ...(AiIcons as Record<string, IconType>),
-    ...(BiIcons as Record<string, IconType>),
-    ...(BsIcons as Record<string, IconType>),
-  };
-
-  const getIconComponent = (iconName?: string | null): IconType | null => {
-    if (!iconName) return null;
-    return allIconComponents[iconName] ?? null;
-  };
+  // 使用共享的图标解析器（见 src/lib/icon.ts）
 
   const handleSearch = () => {
     const sp = new URLSearchParams();

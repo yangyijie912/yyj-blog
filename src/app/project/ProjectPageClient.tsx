@@ -1,7 +1,8 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import { FaLaptopCode, FaPalette, FaTools, FaServer, FaExternalLinkAlt, FaAlignRight } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaAlignRight } from 'react-icons/fa';
 import { MdViewList } from 'react-icons/md';
+import { getIconComponent, DefaultIcon } from '@/lib/icon';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import classnames from 'classnames';
@@ -24,16 +25,7 @@ type Category = {
   projects: Project[];
 };
 
-// 图标映射
-const iconMap: { [key: string]: React.ElementType } = {
-  FaLaptopCode,
-  FaPalette,
-  FaTools,
-  FaServer,
-};
-
-// 默认图标
-const DefaultIcon = FaLaptopCode;
+// 使用共享的图标解析器：按保存的图标名解析组件
 
 // 项目卡片组件
 const ProjectCard = ({ project }: { project: Project }) => {
@@ -165,7 +157,7 @@ export default function ProjectPageClient({ categories }: { categories: Category
               <MdViewList className="text-base" /> {t('project.all.label')}
             </button>
             {categories.map((cat: Category) => {
-              const Icon = cat.icon ? iconMap[cat.icon] || DefaultIcon : DefaultIcon;
+              const Icon = getIconComponent(cat.icon) || DefaultIcon;
               return (
                 <button
                   key={cat.id}
@@ -194,7 +186,7 @@ export default function ProjectPageClient({ categories }: { categories: Category
         ) : (
           <div className="space-y-16">
             {categories.map((cat: Category) => {
-              const Icon = cat.icon ? iconMap[cat.icon] || DefaultIcon : DefaultIcon;
+              const Icon = getIconComponent(cat.icon) || DefaultIcon;
 
               if (cat.projects.length === 0) return null;
 
